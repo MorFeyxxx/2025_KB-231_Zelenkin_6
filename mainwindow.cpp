@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     setWindowTitle("Git Пародия");
 
-    logger = new SmartRtr<Logger>(new Logger("default_log.txt"));
-
     watcher = new DirectoryWatcher(this);
 
     connect(watcher, &DirectoryWatcher::fileChanged, this, [=](const QString& action, const QString& Newpath, const QString& OldPath) {
@@ -59,14 +57,6 @@ void MainWindow::on_stopWatchingButton_clicked() {
     if (watching) {
         watching = false;
         ui->plainTextEdit->appendPlainText("Слежение остановлено.");
-        delete watcher;
-        watcher = new DirectoryWatcher(this);
-        connect(watcher, &DirectoryWatcher::fileChanged, this, [=](const QString& action, const QString& path) {
-            QString msg = action + ": " + path;
-            (*logger)->log(action, path);
-            ui->plainTextEdit->appendPlainText(msg);
-            ui->statusbar->showMessage(msg);
-        });
     }
 }
 

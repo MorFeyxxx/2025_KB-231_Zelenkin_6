@@ -73,6 +73,7 @@ void DirectoryWatcher::updateWatchedFiles() {
                     recentlyRenamed.insert(newPath);
                 } else {
                     emit fileChanged("renamed and modified", newPath, oldPath);
+                    recentlyRenamed.insert(newPath);
                 }
 
                 handledAdded.insert(newPath);
@@ -121,9 +122,11 @@ void DirectoryWatcher::updateWatchedFiles() {
     knownFiles = newFiles;
 }
 
-
 void DirectoryWatcher::onFileChanged(const QString& path) {
-    Q_UNUSED(path);
+    watcher->removePath(path);
+    if (QFileInfo(path).exists()) {
+        watcher->addPath(path);
+    }
     updateWatchedFiles();
 }
 
