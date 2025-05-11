@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFileDialog>
+
+#include "SmartPtr.h"
+#include "Logger.h"
+#include "DirectoryWatcher.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +22,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_chooseDirButton_clicked();
+    void on_startWatchingButton_clicked();
+    void on_stopWatchingButton_clicked();
+    void on_chooseLogFileButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+
+    SmartRtr<Logger>* logger;
+    DirectoryWatcher* watcher;
+    bool watching = false;
+    QString currentDir;
 };
 #endif // MAINWINDOW_H
