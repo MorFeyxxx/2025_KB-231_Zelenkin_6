@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         SmartPtr.h
         Logger.h
         Logger.cpp
+        DirectoryWatcher.h
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET OOP_10 APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
